@@ -20,6 +20,15 @@ module TopModule();
 	wire m_cout;
 	FA BitAdder(.a(m_a), .b(m_b), .carry_i(m_cin), .sum(m_sum), .carry_o(m_cout));
 
+	// Test 32 bit ripple carry adder
+	reg [31:0] m_a32;
+	reg [31:0] m_b32;
+	reg m_cin32;
+	wire [31:0] m_sum32;
+	wire m_cout32;
+	Ripple32Adder Rip32(.a(m_a32), .b(m_b32), .carry_i(m_cin32), .sum(m_sum32), .carry_o(m_cout32));	
+
+
 
 	// Fire
 	initial begin
@@ -31,11 +40,19 @@ module TopModule();
 		m_a = 1'b0;
 		m_b = 1'b0;
 		m_cin = 1'b0;
+
+		m_a32 = 32'b0;
+		m_b32 = 32'b0;
+		m_cin32 = 1'b0;
 		
 		#(`CYCLE)	m_rst = 1'b0;
 
 		#(`CYCLE) m_a = 1'b1;
 		#(`CYCLE) m_b = 1'b1;
+
+		#(`CYCLE) m_a32 = 32'd100;
+		#(`CYCLE) m_b32 = 32'd59;
+		#(`CYCLE) m_cin32 = 1'b1;
 
 		
 		#500 $finish;
