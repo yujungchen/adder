@@ -29,6 +29,16 @@ module TopModule();
 	Ripple32Adder Rip32(.a(m_a32), .b(m_b32), .carry_i(m_cin32), .sum(m_sum32), .carry_o(m_cout32));	
 
 
+	// Test 3:2 CSA
+	reg [31:0] m_i;
+	reg [31:0] m_j;
+	reg [31:0] m_k;
+	
+	wire [32:0] m_sum32csa;
+	
+	Adder32 CSA32(.a(m_i), .b(m_j), .c(m_k), .sum(m_sum32csa));
+	
+
 
 	// Fire
 	initial begin
@@ -41,9 +51,15 @@ module TopModule();
 		m_b = 1'b0;
 		m_cin = 1'b0;
 
+		// RippleAdder Input
 		m_a32 = 32'b0;
 		m_b32 = 32'b0;
 		m_cin32 = 1'b0;
+
+		// CSA32 Input
+		m_i = 32'b0;
+		m_j = 32'b0;
+		m_k = 32'b0;
 		
 		#(`CYCLE)	m_rst = 1'b0;
 
@@ -53,6 +69,11 @@ module TopModule();
 		#(`CYCLE) m_a32 = 32'd100;
 		#(`CYCLE) m_b32 = 32'd59;
 		#(`CYCLE) m_cin32 = 1'b1;
+
+		#(`CYCLE) m_i = 32'd10;
+		#(`CYCLE) m_j = 32'd123;
+		#(`CYCLE) m_k = 32'd5555;
+
 
 		
 		#500 $finish;
