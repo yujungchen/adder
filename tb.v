@@ -37,7 +37,8 @@ module TopModule();
 	wire [32:0] m_sum32csa;
 	
 	Adder32 CSA32(.a(m_i), .b(m_j), .c(m_k), .sum(m_sum32csa));
-	
+
+
 
 
 	// Fire
@@ -61,6 +62,9 @@ module TopModule();
 		m_j = 32'b0;
 		m_k = 32'b0;
 		
+
+
+
 		#(`CYCLE)	m_rst = 1'b0;
 
 		#(`CYCLE) m_a = 1'b1;
