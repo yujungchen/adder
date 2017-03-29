@@ -38,6 +38,21 @@ module TopModule();
 	
 	Adder32 CSA32(.a(m_i), .b(m_j), .c(m_k), .sum(m_sum32csa));
 
+	// Test Booth
+	reg [15:0] mul_i;
+	reg [15:0] mul_j;
+	wire [31:0] mul_res;
+	reg mul_en;
+	wire mul_ack;
+	Booth booth_mul(
+		.a(mul_i),
+		.b(mul_j),
+		.en(mul_en),
+		.clk(m_clk),
+		.rst(m_rst),
+		.res(mul_res),
+		.ack(mul_ack));
+
 
 
 
@@ -61,6 +76,11 @@ module TopModule();
 		m_i = 32'b0;
 		m_j = 32'b0;
 		m_k = 32'b0;
+
+		// Booth Input
+		mul_i = 16'd0;
+		mul_j = 16'd0;
+		mul_en = 1'b0;
 		
 
 
@@ -78,6 +98,10 @@ module TopModule();
 		#(`CYCLE) m_j = 32'd123;
 		#(`CYCLE) m_k = 32'd5555;
 
+		#(`CYCLE) mul_i = 16'd2;
+				  mul_j = -16'd5;
+				  mul_en = 1'b1;
+		#(`CYCLE) mul_en = 1'b0;
 
 		
 		#500 $finish;
