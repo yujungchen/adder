@@ -53,6 +53,21 @@ module TopModule();
 		.res(mul_res),
 		.ack(mul_ack));
 
+	// Test Barrel Shifter
+	reg [15:0] shi_in;
+	reg [3:0] shi_offset;
+	wire [15:0] shi_out;
+	wire [15:0] r_shi_out;
+
+	BarrelShifter shift0(
+	.in(shi_in),
+	.offset(shi_offset),
+	.out(shi_out));
+
+	RightShifter right(
+	.in(shi_in),
+	.offset(shi_offset),
+	.out(r_shi_out));
 
 
 
@@ -81,7 +96,11 @@ module TopModule();
 		mul_i = 16'd0;
 		mul_j = 16'd0;
 		mul_en = 1'b0;
-		
+
+		// Shifter Input
+		shi_in = 16'd0;
+		shi_offset = 4'd0;
+
 
 
 
@@ -102,6 +121,9 @@ module TopModule();
 				  mul_j = -16'd5;
 				  mul_en = 1'b1;
 		#(`CYCLE) mul_en = 1'b0;
+
+		#(`CYCLE) shi_in = 16'habcd;
+				  shi_offset = 4'd5;
 
 		
 		#500 $finish;
